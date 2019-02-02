@@ -16,12 +16,16 @@ WORKDIR /lidarr
 
 COPY *.sh /usr/local/bin/
 
-RUN apk add --no-cache sqlite-libs libmediainfo-patched xmlstarlet \
+RUN apk add --no-cache sqlite-libs libmediainfo xmlstarlet \
  && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.develop.${LIDARR_VER}.linux.tar.gz" \
         | tar xz --strip-components=1 \
  && find -type f -exec chmod 644 {} + \
  && find -type d -o -name '*.exe' -exec chmod 755 {} + \
  && find -name '*.mdb' -delete \
+# Remove unmanted js source-map files
+ && find UI -name '*.map' -delete \
+# These directories are in the wrong place
+ && rm -rf UI/Content/_output \
 # Where we're going, we don't need ~roads~ updates!
  && rm -rf Lidarr.Update \
  && chmod +x /usr/local/bin/*.sh
