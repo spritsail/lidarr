@@ -35,7 +35,7 @@ docker run -dt
     --name=lidarr
     --restart=always
     -v $PWD/config:/config
-    -p 8989:8989
+    -p 8686:8686
     -e URL_BASE=/lidarr
     -e ANALYTICS=false
     -e ...

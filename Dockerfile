@@ -33,7 +33,7 @@ RUN apk add --no-cache sqlite-libs libmediainfo xmlstarlet \
 VOLUME /config
 ENV XDG_CONFIG_HOME=/config
 
-EXPOSE 8689
+EXPOSE 8686
 
 HEALTHCHECK --start-period=10s --timeout=5s \
     CMD wget -qO /dev/null 'http://localhost:8686/api/v1/system/status' \
