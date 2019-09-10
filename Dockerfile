@@ -1,6 +1,6 @@
 FROM spritsail/mono:4.5
 
-ARG LIDARR_VER=0.6.2.883
+ARG LIDARR_VER=0.7.0.1347
 
 ENV SUID=923 SGID=900
 
@@ -17,7 +17,7 @@ WORKDIR /lidarr
 COPY *.sh /usr/local/bin/
 
 RUN apk add --no-cache sqlite-libs libmediainfo xmlstarlet \
- && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.develop.${LIDARR_VER}.linux.tar.gz" \
+ && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.master.${LIDARR_VER}.linux.tar.gz" \
         | tar xz --strip-components=1 \
  && find -type f -exec chmod 644 {} + \
  && find -type d -o -name '*.exe' -exec chmod 755 {} + \
