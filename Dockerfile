@@ -16,7 +16,7 @@ WORKDIR /lidarr
 
 COPY *.sh /usr/local/bin/
 
-RUN apk add --no-cache sqlite-libs libmediainfo xmlstarlet \
+RUN apk add --no-cache ca-certificates-mono sqlite-libs libmediainfo xmlstarlet \
  && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing chromaprint \
  && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.master.${LIDARR_VER}.linux.tar.gz" \
         | tar xz --strip-components=1 \
