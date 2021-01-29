@@ -1,6 +1,6 @@
-FROM spritsail/mono:4.5
+FROM spritsail/alpine:3.13
 
-ARG LIDARR_VER=0.7.1.1381
+ARG LIDARR_VER=0.8.0.2042
 
 ENV SUID=923 SGID=900
 
@@ -14,22 +14,23 @@ LABEL maintainer="Spritsail <lidarr@spritsail.io>" \
 
 WORKDIR /lidarr
 
-COPY *.sh /usr/local/bin/
+COPY --chmod=755 *.sh /usr/local/bin/
 
-RUN apk add --no-cache ca-certificates-mono sqlite-libs libmediainfo xmlstarlet \
- && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing chromaprint \
- && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.master.${LIDARR_VER}.linux.tar.gz" \
+RUN apk add --no-cache \
+        icu-libs \
+        libintl \
+        libmediainfo \
+        sqlite-libs \
+        xmlstarlet \
+ && apk add --no-cache \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+        chromaprint \
+ && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.develop.${LIDARR_VER}.linux-musl-core-x64.tar.gz" \
         | tar xz --strip-components=1 \
- && find -type f -exec chmod 644 {} + \
- && find -type d -o -name '*.exe' -exec chmod 755 {} + \
- && find -name '*.mdb' -delete \
 # Remove unmanted js source-map files
- && find UI -name '*.map' -delete \
-# These directories are in the wrong place
- && rm -rf UI/Content/_output \
+ && find UI -name '*.map' -print -delete \
 # Where we're going, we don't need ~roads~ updates!
- && rm -rf Lidarr.Update \
- && chmod +x /usr/local/bin/*.sh
+ && rm -rfv Lidarr.Update
 
 VOLUME /config
 ENV XDG_CONFIG_HOME=/config
@@ -41,4 +42,4 @@ HEALTHCHECK --start-period=10s --timeout=5s \
             --header "x-api-key: $(xmlstarlet sel -t -v '/Config/ApiKey' /config/config.xml)"
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
-CMD ["mono", "/lidarr/Lidarr.exe", "--no-browser", "--data=/config"]
+CMD ["/lidarr/Lidarr", "--no-browser", "--data=/config"]
