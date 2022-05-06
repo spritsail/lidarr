@@ -1,6 +1,7 @@
-FROM spritsail/alpine:3.13
+FROM spritsail/alpine:3.15
 
-ARG LIDARR_VER=0.8.1.2135
+ARG LIDARR_VER=1.0.0.2570
+ARG LIDARR_BRANCH=develop
 
 ENV SUID=923 SGID=900
 
@@ -17,15 +18,13 @@ WORKDIR /lidarr
 COPY --chmod=755 *.sh /usr/local/bin/
 
 RUN apk add --no-cache \
+        chromaprint \
         icu-libs \
         libintl \
         libmediainfo \
         sqlite-libs \
         xmlstarlet \
- && apk add --no-cache \
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        chromaprint \
- && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.master.${LIDARR_VER}.linux-musl-core-x64.tar.gz" \
+ && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.${LIDARR_BRANCH}.${LIDARR_VER}.linux-musl-core-x64.tar.gz" \
         | tar xz --strip-components=1 \
 # Remove unmanted js source-map files
  && find UI -name '*.map' -print -delete \
