@@ -24,7 +24,8 @@ RUN apk add --no-cache \
         libmediainfo \
         sqlite-libs \
         xmlstarlet \
- && wget -O- "https://github.com/lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.${LIDARR_BRANCH}.${LIDARR_VER}.linux-musl-core-x64.tar.gz" \
+ && test "$(uname -m)" = aarch64 && ARCH=arm64 || ARCH=x64 \
+ && wget -O- "https://github.com/Lidarr/Lidarr/releases/download/v${LIDARR_VER}/Lidarr.${LIDARR_BRANCH}.${LIDARR_VER}.linux-musl-core-${ARCH}.tar.gz" \
         | tar xz --strip-components=1 \
 # Remove unmanted js source-map files
  && find UI -name '*.map' -print -delete \
