@@ -1,7 +1,7 @@
-FROM spritsail/alpine:3.15
+FROM spritsail/alpine:3.16
 
-ARG LIDARR_VER=1.0.1.2578
-ARG LIDARR_BRANCH=develop
+ARG LIDARR_VER=1.0.2.2592
+ARG LIDARR_BRANCH=master
 
 ENV SUID=923 SGID=900
 
