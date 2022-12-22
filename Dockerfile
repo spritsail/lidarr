@@ -4,12 +4,11 @@ ARG LIDARR_VER=0.7.1.1381
 
 ENV SUID=923 SGID=900
 
-LABEL maintainer="Spritsail <lidarr@spritsail.io>" \
-      org.label-schema.vendor="Spritsail" \
-      org.label-schema.name="Lidarr" \
-      org.label-schema.url="https://lidarr.audio/" \
-      org.label-schema.description="A Music management and downloader tool" \
-      org.label-schema.version=${LIDARR_VER} \
+LABEL org.opencontainers.image.authors="Spritsail <lidarr@spritsail.io>" \
+      org.opencontainers.image.title="Lidarr" \
+      org.opencontainers.image.url="https://lidarr.audio/" \
+      org.opencontainers.image.description="A Music management and downloader tool" \
+      org.opencontainers.image.version=${LIDARR_VER} \
       io.spritsail.version.lidarr=${LIDARR_VER}
 
 WORKDIR /lidarr
