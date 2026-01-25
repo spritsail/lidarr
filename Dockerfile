@@ -1,4 +1,4 @@
-FROM spritsail/alpine:3.21
+FROM spritsail/alpine:3.23
 
 ARG LIDARR_VER=3.1.2.4902
 ARG LIDARR_BRANCH=develop
